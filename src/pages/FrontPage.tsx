@@ -8,13 +8,17 @@ import { getCurrentWeekday } from "../common/Utils";
 const FrontPage: React.FC = () => {
   const [saunas, setSaunas] = useState<ISauna[]>([]);
   const navigate = useNavigate();
+  const currentWeekday = getCurrentWeekday();
+  const srv = import.meta.env.VITE_BACKEND_HOST
+  const port = import.meta.env.VITE_BACKEND_PORT
+  const apiPath = import.meta.env.VITE_API_PATH
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/sauna/list")
+    fetch(`https://${srv}${port ? ':' + port : ''}${apiPath ? apiPath + '/list' : ''}`)
       .then((response) => response.json())
       .then((data) => setSaunas(data))
       .catch((error) => console.error("Error fetching data:", error));
-  }, []);
+  }, [srv]);
 
   useEffect(() => {
     // Restore scroll position when the component mounts
@@ -25,23 +29,23 @@ const FrontPage: React.FC = () => {
   }, []);
 
   const handleCardClick = (id: string) => {
+    // Save scroll position before navigating to the details page
     localStorage.setItem("scrollPosition", window.scrollY.toString());
     navigate(`/sauna/${id}`);
   };
 
   const handleRandomClick = () => {
+    // Save scroll position before navigating to the details page
     localStorage.setItem("scrollPosition", window.scrollY.toString());
     const randomSaunaId: string =
       saunas[Math.floor(Math.random() * saunas.length)].id;
     navigate("/sauna/" + randomSaunaId);
   };
 
-  const currentWeekday = getCurrentWeekday();
-
   return (
     <div className="root">
       <div className="header-content">
-        <img src="/saunahaku.png" alt="Sauna" className="logo" />
+        <img src="/saunahaku.png" alt="Saunahaku image" className="logo" />
       </div>
       <div className="center-content">
         {saunas.map((sauna: ISauna, index) => (

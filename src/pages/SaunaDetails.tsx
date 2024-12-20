@@ -7,11 +7,16 @@ import { convertPriceType, convertWeekday, formatTime, getCurrentWeekday } from 
 const SaunaDetails = (): JSX.Element => {
   const { id } = useParams<{ id: string }>();
   const [sauna, setSauna] = useState<ISauna | null>(null);
+  const currentWeekday = getCurrentWeekday();
+  const srv = import.meta.env.VITE_BACKEND_HOST
+  const port = import.meta.env.VITE_BACKEND_PORT
+  const apiPath = import.meta.env.VITE_API_PATH
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/sauna/${id}`)
+    fetch(`https://${srv}${port ? ':' + port : ''}${apiPath ? apiPath + '/list' : ''}`)
       .then((response) => response.json())
-      .then((data) => setSauna(data))
+      .then((data: ISauna[]) => data.find((sauna) => sauna.id === id))
+      .then((data) => setSauna(data!))
       .catch((error) => console.error("Error fetching data:", error));
   }, [id]);
 
@@ -23,7 +28,6 @@ const SaunaDetails = (): JSX.Element => {
     return <div>Loading...</div>;
   }
 
-  const currentWeekday = getCurrentWeekday();
 
   return (
     <div className="details-page">
