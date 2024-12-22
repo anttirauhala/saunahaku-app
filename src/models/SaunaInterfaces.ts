@@ -5,6 +5,11 @@ export interface ISauna {
   postalCode: string;
   city: string;
   openingHours: IOpeningHour[];
+  phone: string;
+  webPage: string;
+  info: string;
+  kiosk: boolean;
+  restaurant: boolean;
 }
 
 export interface IOpeningHour {

@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import "./App.css";
 import SaunaDetails from "./pages/SaunaDetails";
 import FrontPage from "./pages/FrontPage";
 

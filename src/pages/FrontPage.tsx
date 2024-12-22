@@ -9,12 +9,16 @@ const FrontPage: React.FC = () => {
   const [saunas, setSaunas] = useState<ISauna[]>([]);
   const navigate = useNavigate();
   const currentWeekday = getCurrentWeekday();
-  const srv = import.meta.env.VITE_BACKEND_HOST
-  const port = import.meta.env.VITE_BACKEND_PORT
-  const apiPath = import.meta.env.VITE_API_PATH
+  const srv = import.meta.env.VITE_BACKEND_HOST;
+  const port = import.meta.env.VITE_BACKEND_PORT;
+  const apiPath = import.meta.env.VITE_API_PATH;
 
   useEffect(() => {
-    fetch(`https://${srv}${port ? ':' + port : ''}${apiPath ? apiPath + '/list' : ''}`)
+    fetch(
+      `${srv}${port ? ":" + port : ""}${
+        apiPath ? apiPath + "/list" : ""
+      }`
+    )
       .then((response) => response.json())
       .then((data) => setSaunas(data))
       .catch((error) => console.error("Error fetching data:", error));
@@ -25,6 +29,8 @@ const FrontPage: React.FC = () => {
     const savedScrollPosition = localStorage.getItem("scrollPosition");
     if (savedScrollPosition) {
       window.scrollTo(0, parseInt(savedScrollPosition, 10));
+    } else {
+      window.scrollTo(0, 0);
     }
   }, []);
 
@@ -43,36 +49,20 @@ const FrontPage: React.FC = () => {
   };
 
   return (
-    <div className="root">
+    <div>
       <div className="header-content">
         <img src="/saunahaku.png" alt="Saunahaku image" className="logo" />
       </div>
       <div className="center-content">
-        {saunas.map((sauna: ISauna, index) => (
-          <div
-            key={index}
-            className="card"
-            onClick={() => handleCardClick(sauna.id)}
-          >
-            <img src="/sauna.png" alt="Sauna" className="card-image" />
-            <h3>{sauna.name}</h3>
-            <p>{sauna.streetAddress}</p>
-            <p>{sauna.postalCode}</p>
-            <p>{sauna.city}</p>
-            {sauna.openingHours.find((oh) => oh.weekday === currentWeekday) !==
-            undefined ? (
-              <div className="open_today">Avoinna tänään</div>
-            ) : (
-              <div className="closed_today">Suljettu tänään</div>
-            )}
-          </div>
-        ))}
-        <p>
+        {saunas.map((sauna: ISauna, index) =>
+          saunaCard(index, handleCardClick, sauna, currentWeekday)
+        )}
+        <div className="random-container">
           <button onClick={handleRandomClick} className="random-button">
             <img src="/random2.png" alt="Random" className="random-image" />
             <div className="overlay-text">RANDOM SAUNA</div>
           </button>
-        </p>
+        </div>
       </div>
       <br />
       <p>
@@ -85,3 +75,30 @@ const FrontPage: React.FC = () => {
 };
 
 export default FrontPage;
+
+const saunaCard = (
+  index: number,
+  handleCardClick: (id: string) => void,
+  sauna: ISauna,
+  currentWeekday: string
+) => {
+  return (
+    <div
+      key={"card_" + index}
+      className="card"
+      onClick={() => handleCardClick(sauna.id)}
+    >
+      <img src="/sauna.png" alt="Sauna" className="card-image" />
+      <h3>{sauna.name}</h3>
+      <p className="hide-on-mobile">{sauna.streetAddress}</p>
+      <p className="hide-on-mobile">{sauna.postalCode}</p>
+      <p>{sauna.city}</p>
+      {sauna.openingHours.find((oh) => oh.weekday === currentWeekday) !==
+      undefined ? (
+        <div className="open_today">Avoinna tänään</div>
+      ) : (
+        <div className="closed_today">Suljettu tänään</div>
+      )}
+    </div>
+  );
+};

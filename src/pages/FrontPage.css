@@ -1,25 +1,73 @@
-#root {
-  /* max-width: 1280px; */
-  margin: 0 auto;
-  padding: 2rem 2rem 2rem 2rem;
-  text-align: center;
-
-  display: "flex";
-  flex-direction: "column";
-  justify-content: "flex-start";
-  align-items: "center";
-  background-image: url("/public/sauna_lake.png");
-  background-size: cover; /* Optional: to cover the entire area */
-  background-position: center; /* Optional: to center the image */
-  background-repeat: no-repeat; /* Prevent tiling */
-  min-height: 100vh; /* Ensure the background covers the full viewport height */
-  width: 100%;
-}
-
 .logo {
   width: 500px;
   height: 300px;
   border-radius: 10px;
+  margin: 2em;
+}
+
+.center-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  overflow: hidden;
+  flex-wrap: wrap;
+}
+
+.header-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  overflow: auto;
+  justify-content: flex-start;
+  align-items: center;
+  border: 1px solid #a2b1c6;
+  border-radius: 10px;
+  margin: 2em;
+  overflow: auto;
+  background-color: #f2f4f7;
+  padding: 1em;
+}
+
+.card h3 {
+  line-height: 2rem;
+}
+
+.card-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 1em;
+  padding-top: 1em;
+}
+
+.open_today {
+  background-color: rgb(58, 157, 43);
+  border-radius: 5px;
+  padding: 1em;
+  margin: 1em;
+}
+
+.closed_today {
+  background-color: rgb(241, 73, 73);
+  border-radius: 5px;
+  padding: 1em;
+  margin: 1em;
+}
+
+.random-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   margin: 2em;
 }
 
@@ -39,30 +87,13 @@
   width: 180px;
   height: 180px;
   border-radius: 60%;
-}
-
-.center-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  overflow: hidden;
-  flex-wrap: wrap;
-}
-
-.header-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  overflow: hidden;
-  flex-wrap: wrap;
+  margin: 20px;
 }
 
 .overlay-text {
   position: relative;
-  top: -170px;
-  left: 130px;
+  top: -190px;
+  left: 150px;
   transform: translate(-30%, -40%) rotate(40deg);
   color: rgb(216, 217, 220);
   font-size: 0.8em;
@@ -71,43 +102,6 @@
   pointer-events: none; /* Ensure the text does not interfere with button clicks */
 }
 
-.card {
-  line-height: 0.2;
-  width: 300px;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  overflow: auto;
-  justify-content: flex-start;
-  align-items: center;
-  border: 1px solid #a2b1c6;
-  border-radius: 10px;
-  margin: 2em;
-  overflow: auto;
-  background-color: #f2f4f7;
-  padding: 1em;
-}
-
-.card-image {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  margin-bottom: 1em;
-  padding-top: 1em;
-}
-
-.open_today {
-  background-color: rgb(58, 157, 43);
-  border-radius: 5px;
-  padding: 1em;
-  margin: 1em;
-}
-.closed_today {
-  background-color: rgb(241, 73, 73);
-  border-radius: 5px;
-  padding: 1em;
-  margin: 1em;
-}
 
 /* Mobile styles */
 @media (max-width: 768px) {
@@ -120,6 +114,9 @@
     width: 200px;
     margin: 1em;
   }
+  .card h3 {
+    margin: 0.5em;
+  }
   .card-image {
     width: 90px;
     height: 90px;
@@ -128,5 +125,8 @@
     margin-left: 0;
     margin-top: 0.5em;
     margin-bottom: 0.5em;
+  }
+  .hide-on-mobile {
+    display: none;
   }
 }

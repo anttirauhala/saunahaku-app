@@ -43,6 +43,10 @@ export const formatTime = (time: string): string => {
     return `${hours}:${minutes}`;
 };
 
+export const formatPrice = (price: number): string => {
+    return price % 1 === 0 ? `${price}` : `${price.toFixed(2)}`;
+};
+
 export const getCurrentWeekday = (): string => {
     const days = [
         "Sunday",
