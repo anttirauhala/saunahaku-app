@@ -39,6 +39,7 @@
 
 .card h3 {
   line-height: 2rem;
+  cursor: pointer;
 }
 
 .card-image {
