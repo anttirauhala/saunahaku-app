@@ -69,6 +69,8 @@ const FrontPage: React.FC = () => {
         Copyright (c) SaunaHaku 2024
         <br />
         Kaikki oikeudet pidätetään
+        <br />
+        <img src="/saunahaku_email.png" alt="" className="bottom-image" />
       </p>
     </div>
   );
