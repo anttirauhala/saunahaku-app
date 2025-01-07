@@ -61,3 +61,7 @@ export const getCurrentWeekday = (): string => {
     return days[today.getDay()].toUpperCase();
 };
 
+const newSaunas = ['1989995a-a625-4697-810f-db5b8ab55686']
+
+export const isNewSauna = (id: string): boolean => newSaunas.includes(id)
+

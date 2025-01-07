@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { ISauna } from "../models/SaunaInterfaces";
 import "./FrontPage.css";
-import { getCurrentWeekday } from "../common/Utils";
+import { getCurrentWeekday, isNewSauna } from "../common/Utils";
 
 const FrontPage: React.FC = () => {
   const [saunas, setSaunas] = useState<ISauna[]>([]);
@@ -91,6 +91,7 @@ const saunaCard = (
       onClick={() => handleCardClick(sauna.id)}
     >
       <img src="/sauna.png" alt="Sauna" className="card-image" />
+      {isNewSauna(sauna.id) && <img src="/uusi3.jpg" alt="Uusi" className="new-image" />}
       <h3>{sauna.name}</h3>
       <p className="hide-on-mobile">{sauna.streetAddress}</p>
       <p className="hide-on-mobile">{sauna.postalCode}</p>

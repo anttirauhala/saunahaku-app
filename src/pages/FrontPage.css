@@ -50,6 +50,15 @@
   padding-top: 1em;
 }
 
+.new-image {
+  width: 70px;
+  height: 35px;
+  border-radius: 10%;
+  margin-bottom: 0.5em;
+  padding-top: 1em;
+  transform: rotate(-12deg); /* Add 45-degree tilt */
+}
+
 .open_today {
   background-color: rgb(58, 157, 43);
   border-radius: 5px;
@@ -127,6 +136,16 @@
     width: 90px;
     height: 90px;
   }
+
+  .new-image {
+    width: 50px;
+    height: 25px;
+    border-radius: 10%;
+    margin-bottom: 0.5em;
+    padding-top: 1em;
+    transform: rotate(-12deg); /* Add 45-degree tilt */
+  }
+
   .random-button {
     margin-left: 0;
     margin-top: 0.5em;
