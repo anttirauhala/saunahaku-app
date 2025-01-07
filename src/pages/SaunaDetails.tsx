@@ -55,10 +55,12 @@ const SaunaDetails = (): JSX.Element => {
         </a>
       </p>
       {sauna.info?.length > 0 ? <h3>Info</h3> : null}
-      {sauna.info?.length > 0 ? <p className="info-text">{sauna.info}</p> : null}
+      {sauna.info?.length > 0 ? (
+        <p className="info-text">{sauna.info}</p>
+      ) : null}
 
       <h3>Palvelut</h3>
-      <p className="sauna-info" >
+      <p className="sauna-info">
         Kioski: {sauna.kiosk ? "Kyllä" : "Ei"}
         <br></br>
         Ravintola: {sauna.restaurant ? "Kyllä" : "Ei"}
@@ -90,6 +92,11 @@ const SaunaDetails = (): JSX.Element => {
           </div>
         </p>
       ))}
+      <div className="back-container">
+        <a href="/" className="back-link">
+          <img src="/back.png" alt="Back arrow" className="back-arrow" />
+        </a>
+      </div>
     </div>
   );
 };
