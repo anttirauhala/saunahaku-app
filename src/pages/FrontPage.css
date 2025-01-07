@@ -35,11 +35,11 @@
   overflow: auto;
   background-color: #f2f4f7;
   padding: 1em;
+  cursor: pointer;
 }
 
 .card h3 {
   line-height: 2rem;
-  cursor: pointer;
 }
 
 .card-image {
@@ -134,5 +134,9 @@
   }
   .hide-on-mobile {
     display: none;
+  }
+  .bottom-image {
+    width: 200px;
+    margin: 1em;    
   }
 }
