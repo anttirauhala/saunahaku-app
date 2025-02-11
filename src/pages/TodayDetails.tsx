@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { ISauna } from "../models/SaunaInterfaces";
 import { useEffect, useState } from "react";
 import "./SaunaDetails.css";
@@ -11,6 +11,7 @@ import {
 
 const TodayDetails = (): JSX.Element => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [sauna, setSauna] = useState<ISauna | null>(null);
   const currentWeekday = getCurrentWeekday();
   const srv = import.meta.env.VITE_BACKEND_HOST;
@@ -32,6 +33,10 @@ const TodayDetails = (): JSX.Element => {
   if (!sauna) {
     return <div>Loading...</div>;
   }
+
+  const handleBackClick = () => {
+    navigate(-1);
+  };
 
   const todayOpeningHour = sauna.openingHours.find(
     (oh) => oh.weekday === currentWeekday
@@ -60,9 +65,9 @@ const TodayDetails = (): JSX.Element => {
       )}
 
       <div className="back-container">
-        <a href={`/sauna/${id}`} className="back-link">
+        <button onClick={handleBackClick} className="back-link">
           <img src="/back.png" alt="Back arrow" className="back-arrow" />
-        </a>
+        </button>
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import { getCurrentWeekday, isNewSauna } from "../common/Utils";
 
 const FrontPage: React.FC = () => {
   const [saunas, setSaunas] = useState<ISauna[]>([]);
+  const [sortCriteria, setSortCriteria] = useState<string>(localStorage.getItem("sortCriteria") || "alphabetical");
   const navigate = useNavigate();
   const currentWeekday = getCurrentWeekday();
   const srv = import.meta.env.VITE_BACKEND_HOST;
@@ -45,16 +46,61 @@ const FrontPage: React.FC = () => {
     localStorage.setItem("scrollPosition", window.scrollY.toString());
     const randomSaunaId: string =
       saunas[Math.floor(Math.random() * saunas.length)].id;
-    navigate("/sauna/" + randomSaunaId);
+    navigate(`/sauna/${randomSaunaId}`);
   };
+
+  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newSortCriteria = event.target.value;
+    setSortCriteria(newSortCriteria);
+    localStorage.setItem("sortCriteria", newSortCriteria);
+  };
+
+  const sortedSaunas = saunas.sort((a, b) => {
+    if (sortCriteria === "latest") {
+      const aClosingTimes = a.openingHours.filter((oh) => oh.weekday === currentWeekday).map((oh) => oh.closingTime);
+      const bClosingTimes = b.openingHours.filter((oh) => oh.weekday === currentWeekday).map((oh) => oh.closingTime);
+      const aLatestClosingTime = aClosingTimes.length > 0 ? Math.max(...aClosingTimes.map(time => parseInt(time.replace(':', ''), 10))) : 0;
+      const bLatestClosingTime = bClosingTimes.length > 0 ? Math.max(...bClosingTimes.map(time => parseInt(time.replace(':', ''), 10))) : 0;
+      return bLatestClosingTime - aLatestClosingTime;
+    } else if (sortCriteria === "cheapest") {
+      const getLatestPrice = (sauna: ISauna) => {
+        const todayOpenings = sauna.openingHours.filter((oh) => oh.weekday === currentWeekday);
+        if (todayOpenings.length === 0) return Infinity;
+        const latestOpening = todayOpenings.reduce((latest, current) => {
+          const latestTime = parseInt(latest.closingTime.replace(':', ''), 10);
+          const currentTime = parseInt(current.closingTime.replace(':', ''), 10);
+          return currentTime > latestTime ? current : latest;
+        });
+        return Math.min(...latestOpening.prices.filter((p) => p.priceType === "ADULT").map((p) => p.price));
+      };
+      const aPrice = getLatestPrice(a);
+      const bPrice = getLatestPrice(b);
+      if (aPrice !== bPrice) return aPrice - bPrice;
+    }
+    if (a.openingHours.some((oh) => oh.weekday === currentWeekday) && !b.openingHours.some((oh) => oh.weekday === currentWeekday)) {
+      return -1;
+    } else if (!a.openingHours.some((oh) => oh.weekday === currentWeekday) && b.openingHours.some((oh) => oh.weekday === currentWeekday)) {
+      return 1;
+    }
+    return a.name.localeCompare(b.name);
+  });
 
   return (
     <div>
       <div className="header-content">
         <img src="/saunahaku.png" alt="Saunahaku image" className="logo" />
       </div>
+      <div className="sort-container">
+        <label>
+          <select value={sortCriteria} onChange={handleSortChange}>
+            <option value="alphabetical">Aakkosjärjestys</option>
+            <option value="latest">Myöhäisimpään auki tänään</option>
+            <option value="cheapest">Halvimmasta kalleimpaan</option>
+          </select>
+        </label>
+      </div>
       <div className="center-content">
-        {saunas.map((sauna: ISauna, index) =>
+        {sortedSaunas.map((sauna: ISauna, index) =>
           saunaCard(index, handleCardClick, sauna, currentWeekday)
         )}
         <div className="random-container">

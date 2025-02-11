@@ -35,12 +35,16 @@ const SaunaDetails = (): JSX.Element => {
     return <div>Loading...</div>;
   }
 
+  const handleBackClick = () => {
+    navigate(-1);
+  };
+
   return (
     <div className="details-page">
       <div className="back-container">
-        <a href={`/`} className="back-link">
+        <button onClick={handleBackClick} className="back-link">
           <img src="/back.png" alt="Back arrow" className="back-arrow" />
-        </a>
+        </button>
       </div>
       <h2>{sauna.name}</h2>
       <img src="/sauna_penguin.png" alt="Sauna Penguin" className="top-image" />
@@ -89,8 +93,7 @@ const SaunaDetails = (): JSX.Element => {
               <b>
                 {convertWeekday(oh.weekday)}
                 <br />
-                {formatTime(oh.openingTime) ?? "?"} -{" "}
-                {formatTime(oh.closingTime) ?? "?"}
+                {formatTime(oh.openingTime) ?? "?"} - {formatTime(oh.closingTime) ?? "?"}
               </b>
             </div>
             <br></br>
@@ -98,8 +101,7 @@ const SaunaDetails = (): JSX.Element => {
               {oh.prices &&
                 oh.prices.map((price, index) => (
                   <div key={index} className="price-data">
-                    {convertPriceType(price.priceType)}:{" "}
-                    {formatPrice(price.price)} EUR
+                    {convertPriceType(price.priceType)}: {formatPrice(price.price)} EUR
                   </div>
                 ))}
             </div>
@@ -107,9 +109,9 @@ const SaunaDetails = (): JSX.Element => {
         </p>
       ))}
       <div className="back-container">
-        <a href="/" className="back-link">
+        <button onClick={handleBackClick} className="back-link">
           <img src="/back.png" alt="Back arrow" className="back-arrow" />
-        </a>
+        </button>
       </div>
     </div>
   );

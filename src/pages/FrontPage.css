@@ -117,6 +117,26 @@
   border-radius: 10px;
 }
 
+.checkbox-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.sort-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1em;
+  font-size: 1.1em;
+}
+
+.sort-container select {
+  font-size: 1.1em;
+  padding: 0.2em;
+  margin-left: 0.5em;
+}
 
 /* Mobile styles */
 @media (max-width: 768px) {

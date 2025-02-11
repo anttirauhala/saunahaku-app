@@ -28,6 +28,12 @@
   height: 50px;
 }
 
+.back-link {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
 .top-image {
   width: 200px;
   height: 200px;
