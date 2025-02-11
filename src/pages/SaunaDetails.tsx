@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { ISauna } from "../models/SaunaInterfaces";
 import { useEffect, useState } from "react";
 import "./SaunaDetails.css";
@@ -12,6 +12,7 @@ import {
 
 const SaunaDetails = (): JSX.Element => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [sauna, setSauna] = useState<ISauna | null>(null);
   const currentWeekday = getCurrentWeekday();
   const srv = import.meta.env.VITE_BACKEND_HOST;
@@ -69,8 +70,16 @@ const SaunaDetails = (): JSX.Element => {
       <h3>Aukiolo ja hinnat</h3>
 
       {sauna.openingHours.map((oh, index) => (
-        <p>
-          <div className={oh.weekday === currentWeekday ? "current-day" : ""}>
+        <p key={index}>
+          <div
+            className={oh.weekday === currentWeekday ? "current-day clickable" : ""}
+            // if current day and has valid opening times, allow click to view today's details
+            onClick={() => {
+              if (oh.weekday === currentWeekday && oh.openingTime && oh.closingTime) {
+                navigate(`/sauna/${id}/today`);
+              }
+            }}
+          >
             <div key={index}>
               <b>
                 {convertWeekday(oh.weekday)}
