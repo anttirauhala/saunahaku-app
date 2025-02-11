@@ -37,6 +37,11 @@ const SaunaDetails = (): JSX.Element => {
 
   return (
     <div className="details-page">
+      <div className="back-container">
+        <a href={`/`} className="back-link">
+          <img src="/back.png" alt="Back arrow" className="back-arrow" />
+        </a>
+      </div>
       <h2>{sauna.name}</h2>
       <img src="/sauna_penguin.png" alt="Sauna Penguin" className="top-image" />
 
