@@ -94,7 +94,7 @@ const FrontPage: React.FC = () => {
         <label>
           <select value={sortCriteria} onChange={handleSortChange}>
             <option value="alphabetical">Aakkosjärjestys</option>
-            <option value="latest">Myöhäisimpään auki tänään</option>
+            <option value="latest">Myöhäisimpään auki</option>
             <option value="cheapest">Halvimmasta kalleimpaan</option>
           </select>
         </label>

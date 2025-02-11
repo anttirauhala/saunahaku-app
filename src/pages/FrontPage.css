@@ -117,13 +117,6 @@
   border-radius: 10px;
 }
 
-.checkbox-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 1em;
-}
-
 .sort-container {
   display: flex;
   justify-content: center;
@@ -177,5 +170,19 @@
   .bottom-image {
     width: 200px;
     margin: 1em;    
+  }
+
+  .sort-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1em;
+    font-size: 1em;
+  }
+  
+  .sort-container select {
+    font-size: 1em;
+    padding: 0.2em;
+    margin-left: 0.5em;
   }
 }
