@@ -99,7 +99,7 @@ const FrontPage: React.FC = () => {
           </select>
         </label>
       </div>
-      <i>Saunojen tiedot päivitetty 31.8.2025</i>
+      <i>Saunojen tiedot päivitetty 13.10.2025</i>
       <div className="center-content">
         {sortedSaunas.map((sauna: ISauna, index) =>
           saunaCard(index, handleCardClick, sauna, currentWeekday)
@@ -113,7 +113,7 @@ const FrontPage: React.FC = () => {
       </div>
       <br />
       <p>
-        Copyright (c) SaunaHaku 2024
+        Copyright (c) SaunaHaku 2025
         <br />
         Kaikki oikeudet pidätetään
         <br />
