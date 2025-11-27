@@ -99,7 +99,7 @@ const FrontPage: React.FC = () => {
           </select>
         </label>
       </div>
-      <i>Saunojen tiedot päivitetty 13.10.2025</i>
+      <i>Saunojen tiedot päivitetty 27.11.2025</i>
       <div className="center-content">
         {sortedSaunas.map((sauna: ISauna, index) =>
           saunaCard(index, handleCardClick, sauna, currentWeekday)
