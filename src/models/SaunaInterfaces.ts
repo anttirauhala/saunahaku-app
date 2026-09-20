@@ -10,6 +10,7 @@ export interface ISauna {
   info: string;
   kiosk: boolean;
   restaurant: boolean;
+  isNew: boolean;
 }
 
 export interface IOpeningHour {
