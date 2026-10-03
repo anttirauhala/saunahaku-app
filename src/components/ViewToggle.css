@@ -1,0 +1,34 @@
+.view-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+  margin: 0.5em 0 1em;
+}
+
+.view-toggle-button {
+  background-color: #f2f4f7;
+  color: #1a1a1a;
+  border: 1px solid #a2b1c6;
+  border-radius: 20px;
+  padding: 0.5em 1.5em;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+}
+
+.view-toggle-button:hover {
+  border-color: #646cff;
+}
+
+.view-toggle-button.active {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  border-color: #1a1a1a;
+}
+
+@media (max-width: 768px) {
+  .view-toggle-button {
+    padding: 0.45em 1.1em;
+  }
+}

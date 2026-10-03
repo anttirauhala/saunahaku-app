@@ -7,6 +7,7 @@ import {
   convertWeekday,
   formatPrice,
   formatTime,
+  getBackendUrl,
   getCurrentWeekday,
 } from "../common/Utils";
 
@@ -15,17 +16,14 @@ const SaunaDetails = (): JSX.Element => {
   const navigate = useNavigate();
   const [sauna, setSauna] = useState<ISauna | null>(null);
   const currentWeekday = getCurrentWeekday();
-  const srv = import.meta.env.VITE_BACKEND_HOST;
-  const port = import.meta.env.VITE_BACKEND_PORT;
-  const apiPath = import.meta.env.VITE_API_PATH;
 
   useEffect(() => {
-    fetch(`${srv}${port ? ":" + port : ""}${apiPath ? apiPath + "/list" : ""}`)
+    fetch(getBackendUrl())
       .then((response) => response.json())
       .then((data: ISauna[]) => data.find((sauna) => sauna.id === id))
       .then((data) => setSauna(data!))
       .catch((error) => console.error("Error fetching data:", error));
-  }, [srv, id, apiPath, port]);
+  }, [id]);
 
   useEffect(() => {
     window.scrollTo(0, 0);

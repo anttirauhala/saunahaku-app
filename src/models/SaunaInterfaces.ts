@@ -4,6 +4,8 @@ export interface ISauna {
   streetAddress: string;
   postalCode: string;
   city: string;
+  latitude?: number;
+  longitude?: number;
   openingHours: IOpeningHour[];
   phone: string;
   webPage: string;

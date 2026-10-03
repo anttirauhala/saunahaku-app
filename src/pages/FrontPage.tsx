@@ -4,7 +4,12 @@ import { useNavigate, useNavigationType } from "react-router-dom";
 import { ISauna } from "../models/SaunaInterfaces";
 import { IWaterTemperature } from "../models/WaterInterfaces";
 import "./FrontPage.css";
-import { formatTemperature, getCurrentWeekday } from "../common/Utils";
+import {
+  formatTemperature,
+  getBackendUrl,
+  getCurrentWeekday,
+} from "../common/Utils";
+import ViewToggle from "../components/ViewToggle";
 
 const FrontPage: React.FC = () => {
   const [saunas, setSaunas] = useState<ISauna[]>([]);
@@ -14,21 +19,14 @@ const FrontPage: React.FC = () => {
   const navigationType = useNavigationType();
   const restoredScrollRef = useRef(false);
   const currentWeekday = getCurrentWeekday();
-  const srv = import.meta.env.VITE_BACKEND_HOST;
-  const port = import.meta.env.VITE_BACKEND_PORT;
-  const apiPath = import.meta.env.VITE_API_PATH;
   const waterUrl = import.meta.env.VITE_WATER_TEMPERATURE_URL;
 
   useEffect(() => {
-    fetch(
-      `${srv}${port ? ":" + port : ""}${
-        apiPath ? apiPath + "/list" : ""
-      }`
-    )
+    fetch(getBackendUrl())
       .then((response) => response.json())
       .then((data) => setSaunas(data))
       .catch((error) => console.error("Error fetching data:", error));
-  }, [srv]);
+  }, []);
 
   useEffect(() => {
     if (!waterUrl) return;
@@ -116,6 +114,7 @@ const FrontPage: React.FC = () => {
       <div className="header-content">
         <img src="/saunahaku.png" alt="Saunahaku image" className="logo" />
       </div>
+      <ViewToggle active="list" />
       {waterTemperature && !waterTemperature.stale && (
         <div className="water-temperature">
           Veden lämpötila: {formatTemperature(waterTemperature.temperatureC)} °C
