@@ -2,17 +2,20 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ISauna } from "../models/SaunaInterfaces";
+import { IWaterTemperature } from "../models/WaterInterfaces";
 import "./FrontPage.css";
-import { getCurrentWeekday } from "../common/Utils";
+import { formatTemperature, getCurrentWeekday } from "../common/Utils";
 
 const FrontPage: React.FC = () => {
   const [saunas, setSaunas] = useState<ISauna[]>([]);
+  const [waterTemperature, setWaterTemperature] = useState<IWaterTemperature | null>(null);
   const [sortCriteria, setSortCriteria] = useState<string>(localStorage.getItem("sortCriteria") || "alphabetical");
   const navigate = useNavigate();
   const currentWeekday = getCurrentWeekday();
   const srv = import.meta.env.VITE_BACKEND_HOST;
   const port = import.meta.env.VITE_BACKEND_PORT;
   const apiPath = import.meta.env.VITE_API_PATH;
+  const waterUrl = import.meta.env.VITE_WATER_TEMPERATURE_URL;
 
   useEffect(() => {
     fetch(
@@ -24,6 +27,14 @@ const FrontPage: React.FC = () => {
       .then((data) => setSaunas(data))
       .catch((error) => console.error("Error fetching data:", error));
   }, [srv]);
+
+  useEffect(() => {
+    if (!waterUrl) return;
+    fetch(waterUrl)
+      .then((response) => response.json())
+      .then((data: IWaterTemperature) => setWaterTemperature(data))
+      .catch((error) => console.error("Error fetching water temperature:", error));
+  }, [waterUrl]);
 
   useEffect(() => {
     // Restore scroll position when the component mounts
@@ -90,6 +101,11 @@ const FrontPage: React.FC = () => {
       <div className="header-content">
         <img src="/saunahaku.png" alt="Saunahaku image" className="logo" />
       </div>
+      {waterTemperature && !waterTemperature.stale && (
+        <div className="water-temperature">
+          Veden lämpötila: {formatTemperature(waterTemperature.temperatureC)} °C
+        </div>
+      )}
       <div className="sort-container">
         <label>
           <select value={sortCriteria} onChange={handleSortChange}>
@@ -118,6 +134,9 @@ const FrontPage: React.FC = () => {
         Kaikki oikeudet pidätetään
         <br />
         <img src="/saunahaku_email.png" alt="" className="bottom-image" />
+      </p>
+      <p className="water-temperature-credit">
+        Veden lämpötila: Suomen ympäristökeskus (SYKE), Hydrologiarajapinta.
       </p>
     </div>
   );

@@ -47,6 +47,13 @@ export const formatPrice = (price: number): string => {
     return price % 1 === 0 ? `${price}` : `${price.toFixed(2)}`;
 };
 
+export const formatTemperature = (temperature: number): string => {
+    return temperature.toLocaleString("fi-FI", {
+        minimumFractionDigits: 1,
+        maximumFractionDigits: 1,
+    });
+};
+
 export const getCurrentWeekday = (): string => {
     const days = [
         "Sunday",

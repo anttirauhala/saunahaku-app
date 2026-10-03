@@ -117,6 +117,22 @@
   border-radius: 10px;
 }
 
+.water-temperature {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.5em;
+  font-size: 1.2em;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+.water-temperature-credit {
+  font-size: 0.7em;
+  color: #333333;
+  margin: 0.5em 1em 2em;
+}
+
 .sort-container {
   display: flex;
   justify-content: center;
@@ -170,6 +186,16 @@
   .bottom-image {
     width: 200px;
     margin: 1em;    
+  }
+
+  .water-temperature {
+    font-size: 1.1em;
+    margin-bottom: 0.5em;
+  }
+
+  .water-temperature-credit {
+    font-size: 0.65em;
+    margin: 0.5em 1em 1.5em;
   }
 
   .sort-container {
