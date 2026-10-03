@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate, useNavigationType } from "react-router-dom";
 
 import { ISauna } from "../models/SaunaInterfaces";
 import { IWaterTemperature } from "../models/WaterInterfaces";
@@ -11,6 +11,8 @@ const FrontPage: React.FC = () => {
   const [waterTemperature, setWaterTemperature] = useState<IWaterTemperature | null>(null);
   const [sortCriteria, setSortCriteria] = useState<string>(localStorage.getItem("sortCriteria") || "alphabetical");
   const navigate = useNavigate();
+  const navigationType = useNavigationType();
+  const restoredScrollRef = useRef(false);
   const currentWeekday = getCurrentWeekday();
   const srv = import.meta.env.VITE_BACKEND_HOST;
   const port = import.meta.env.VITE_BACKEND_PORT;
@@ -37,24 +39,37 @@ const FrontPage: React.FC = () => {
   }, [waterUrl]);
 
   useEffect(() => {
-    // Restore scroll position when the component mounts
-    const savedScrollPosition = localStorage.getItem("scrollPosition");
-    if (savedScrollPosition) {
-      window.scrollTo(0, parseInt(savedScrollPosition, 10));
-    } else {
-      window.scrollTo(0, 0);
+    // Restore the scroll position only after the sauna cards are rendered.
+    // Before that the document is still short, so the requested position would
+    // be clamped and scroll anchoring would end up pushing the page to the
+    // bottom.
+    if (saunas.length === 0 || restoredScrollRef.current) return;
+    restoredScrollRef.current = true;
+    if (navigationType === "POP") {
+      // Returning from a sauna details page: continue where the user left off
+      const savedScrollPosition = sessionStorage.getItem("scrollPosition");
+      if (savedScrollPosition) {
+        sessionStorage.removeItem("scrollPosition");
+        const savedY = Number.parseInt(savedScrollPosition, 10);
+        if (!Number.isNaN(savedY)) {
+          window.scrollTo(0, savedY);
+          return;
+        }
+      }
     }
-  }, []);
+    // A fresh open or forward navigation starts from the top
+    window.scrollTo(0, 0);
+  }, [saunas.length, navigationType]);
 
   const handleCardClick = (id: string) => {
     // Save scroll position before navigating to the details page
-    localStorage.setItem("scrollPosition", window.scrollY.toString());
+    sessionStorage.setItem("scrollPosition", window.scrollY.toString());
     navigate(`/sauna/${id}`);
   };
 
   const handleRandomClick = () => {
     // Save scroll position before navigating to the details page
-    localStorage.setItem("scrollPosition", window.scrollY.toString());
+    sessionStorage.setItem("scrollPosition", window.scrollY.toString());
     const randomSaunaId: string =
       saunas[Math.floor(Math.random() * saunas.length)].id;
     navigate(`/sauna/${randomSaunaId}`);
