@@ -129,14 +129,15 @@ const FrontPage: React.FC = () => {
       </div>
       <br />
       <p>
-        Copyright (c) SaunaHaku 2025
+        Copyright (c) SaunaHaku 2026
         <br />
         Kaikki oikeudet pidätetään
         <br />
         <img src="/saunahaku_email.png" alt="" className="bottom-image" />
       </p>
       <p className="water-temperature-credit">
-        Veden lämpötila: Suomen ympäristökeskus (SYKE), Hydrologiarajapinta.
+        Veden lämpötilan lähde: Suomen ympäristökeskus (SYKE),
+        Hydrologiarajapinta (CC BY 4.0).
       </p>
     </div>
   );
